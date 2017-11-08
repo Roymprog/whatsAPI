@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* Respond to webhooks from API. */
 router.post('/in', (req, res, next) => {
-  if (req.token !== 'abcd1234') {
+  if (isTokenSet(req.token)) {
     const err = new Error('You do not have the rights to do this!');
     error.code = 'E_UNAUTHORIZED'
     err.httpStatusCode = 403;
@@ -14,4 +14,8 @@ router.post('/in', (req, res, next) => {
   return res.send('Received');
 });
 
-module.exports = router;
+const isTokenSet = (token) => {
+  return token === 'abcd1234';
+}
+
+module.exports = {router, isTokenSet};

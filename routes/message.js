@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+const {isTokenSet} = require('../lib/validations');
+
 /* Respond to webhooks from API. */
 router.post('/in', (req, res, next) => {
-  if (isTokenSet(req.token)) {
+  if (isTokenSet(req.body.token)) {
     const err = new Error('You do not have the rights to do this!');
     error.code = 'E_UNAUTHORIZED'
     err.httpStatusCode = 403;
@@ -14,8 +16,4 @@ router.post('/in', (req, res, next) => {
   return res.send('Received');
 });
 
-const isTokenSet = (token) => {
-  return token === 'abcd1234';
-}
-
-module.exports = {router, isTokenSet};
+module.exports = router;

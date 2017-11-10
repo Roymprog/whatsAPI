@@ -1,6 +1,6 @@
 const assert = require('chai').assert;
 
-const { isTokenSet } = require('/home/fd99od/personal_web_projects/whatsAPI/routes/message.js');
+const { isTokenSet } = require('../../lib/validations');
 
 describe('Messages', () => {
     describe('incoming: ', () => {

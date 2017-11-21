@@ -7,11 +7,11 @@ const { isTokenSet, isTextMessage } = require('../lib/validations');
 router.post('/in', (req, res, next) => {
   const message = req.body;
   isTokenSet(message.token)
-  .then(isTextMessage(undefined))
+  .then(isTextMessage)
   .then((message) => {
     return res.send('Received');
-  }).catch(err => 
-    next(err)
+  }).catch(err => {
+    return next(err)}
   );
 });
 

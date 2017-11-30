@@ -1,10 +1,27 @@
-class Message {
-  constructor({ receiverNumber, senderNumber, text, direction, type }) {
-    this.receiverNumber = receiverNumber;
-    this.senderNumber = senderNumber;
-    this.text = text;
-    this.direction = direction;
-  }
-}
+const {mongoose} = require('../db/mongoose');
 
-module.exports = { Message }
+const Message = mongoose.model('Message', {
+  receiverNumber: {
+    type: Number
+  },
+  senderNumber: {
+    type: Number
+  },
+  content: {
+    type: String
+  },
+  direction: {
+    type: String,
+    enum: ['i', 'o' ]
+  },
+  contentType: {
+    type: String,
+    enum: ['chat', 'video', 'image', 'audio', 'document', 'vcard', 'location']
+  },
+  acknowledgementStatus: {
+    type: Number,
+    enum: [0, 1, 2, 3]
+  }
+});
+
+module.exports = Message;

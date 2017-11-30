@@ -6,20 +6,21 @@ const Message = require('../models/message');
 
 /* Respond to webhooks from API. */
 router.post('/in', (req, res, next) => {
+  const authorizationToken = req.body.token;
   const message = new Message({
     receiverNumber: 31657594215,
-    senderNumber: req.body.uid,
-    text: req.body.message.body.type,
-    direction: "incoming",
-    type: req.body.message.type,
-    acknowledgementStatus: req.body.ack,
+    senderNumber: req.body.contact.uid,
+    content: req.body.message.body.text,
+    direction: "i",
+    contentType: req.body.message.type,
+    acknowledgementStatus: req.body.message.ack,
   });
   console.log('message:', message)
-  isTokenSet(message.token)
-  .then(isTextMessage)
-  .then((message) => {
-    
-    return res.send('Received');
+  isTokenSet(authorizationToken)
+  .then(isTextMessage(message.contentType))
+  .then(message.save())
+  .then((doc) => {
+    return res.send(doc);
   }).catch(err => {
     return next(err)}
   );

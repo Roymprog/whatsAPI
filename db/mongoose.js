@@ -5,7 +5,9 @@ mongoose.Promise = global.Promise;
 const mongoDBurl = 'mongodb://localhost:27017/whatsAPI';
 
 // Use connect method to connect to the server
-mongoose.connect(mongoDBurl);
+mongoose.connect(mongoDBurl, {
+    useMongoClient: true,
+});
 
 mongoose.connection.on('connected', () => {
     console.log(`Connected successfully to server on: ${mongoDBurl}`);

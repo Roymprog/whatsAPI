@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const { isTokenSet, isTextMessage } = require('../lib/validations');
+const { isTokenSet, isChatMessage } = require('../lib/validations');
 const Message = require('../models/message');
 
 /* Respond to webhooks from API. */
@@ -17,7 +17,7 @@ router.post('/in', (req, res, next) => {
   });
   console.log('message:', message)
   isTokenSet(authorizationToken)
-  .then(isTextMessage(message.contentType))
+  .then(isChatMessage(message.contentType))
   .then(message.save())
   .then((doc) => {
     return res.send(doc);

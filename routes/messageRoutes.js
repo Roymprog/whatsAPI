@@ -14,10 +14,11 @@ router.post('/in', (req, res, next) => {
     direction: "i",
     contentType: req.body.message.type,
     acknowledgementStatus: req.body.message.ack,
+    token: req.body.token,
   });
   console.log('message:', message)
-  isTokenSet(authorizationToken)
-  .then(isChatMessage(message.contentType))
+  isTokenSet(message)
+  .then(isChatMessage)
   .then(message.save())
   .then((doc) => {
     return res.send(doc);

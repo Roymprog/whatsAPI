@@ -21,6 +21,9 @@ const Message = mongoose.model('Message', {
   acknowledgementStatus: {
     type: Number,
     enum: [0, 1, 2, 3]
+  },
+  token: {
+    type: String,
   }
 });
 
